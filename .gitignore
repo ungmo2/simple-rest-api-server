@@ -2,5 +2,13 @@
 node_modules/
 npm-debug.log
 
-# Mac OS X
+# System Files
 .DS_Store
+Thumbs.db
+
+# vs code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
