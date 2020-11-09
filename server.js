@@ -7,7 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.static('public'));
-app.use(express.json()); // for parsing application/json
+app.use(express.json());
 
 app.get('/todos', (req, res) => {
   res.send(todos);
@@ -38,14 +38,6 @@ app.post('/todos', (req, res) => {
   res.send(todos);
 });
 
-// 모든 할일의 completed를 일괄 변경
-app.patch('/todos/completed', (req, res) => {
-  const completed = req.body;
-
-  todos = todos.map(todo => ({ ...todo, ...completed }));
-  res.send(todos);
-});
-
 app.patch('/todos/:id', (req, res) => {
   const id = +req.params.id;
   const completed = req.body;
@@ -57,9 +49,15 @@ app.patch('/todos/:id', (req, res) => {
     });
   }
 
-  todos = todos.map(todo =>
-    todo.id === id ? { ...todo, ...completed } : todo
-  );
+  todos = todos.map(todo => (todo.id === id ? { ...todo, ...completed } : todo));
+  res.send(todos);
+});
+
+// 모든 할일의 completed를 일괄 변경
+app.patch('/todos', (req, res) => {
+  const completed = req.body;
+
+  todos = todos.map(todo => ({ ...todo, ...completed }));
   res.send(todos);
 });
 
